@@ -3,7 +3,7 @@
 <suite name="Suite Login Test" verbose="1">
 
     <test name="Login Test with Chrome">
-        <parameter name="browser" value="chrome"></parameter>
+        <parameter name="browser" value="edge"/>
         <classes>
             <class name="com.anhtester.Bai26_ParallelExecutionPOM.testcases.LoginTest">
                 <methods>

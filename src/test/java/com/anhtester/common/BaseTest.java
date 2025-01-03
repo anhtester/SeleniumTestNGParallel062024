@@ -1,6 +1,7 @@
 package com.anhtester.common;
 
 import com.anhtester.drivers.DriverManager;
+import com.anhtester.helpers.PropertiesHelper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -19,6 +20,13 @@ public class BaseTest {
     @Parameters({"browser"})
     public void createDriver(@Optional("chrome") String browser) {
         WebDriver driver;
+
+        PropertiesHelper.loadAllFiles();
+        if(PropertiesHelper.getValue("BROWSER").isEmpty() && PropertiesHelper.getValue("BROWSER").isBlank()){
+            browser = browser;
+        }else {
+            browser = PropertiesHelper.getValue("BROWSER");
+        }
 
         switch (browser) {
             case "chrome":

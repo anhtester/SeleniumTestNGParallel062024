@@ -2,6 +2,7 @@ package com.anhtester.Bai26_ParallelExecutionPOM.testcases;
 
 import com.anhtester.Bai26_ParallelExecutionPOM.pages.LoginPage;
 import com.anhtester.common.BaseTest;
+import com.anhtester.helpers.PropertiesHelper;
 import org.testng.annotations.Test;
 
 public class LoginTest extends BaseTest {
@@ -13,6 +14,8 @@ public class LoginTest extends BaseTest {
         loginPage = new LoginPage();
         loginPage.loginCRM("admin@example.com", "123456");
         loginPage.verifyLoginSuccess();
+        //Chỗ này hàm loadAllFiles() đã được gọi trước bên BaseTest
+        PropertiesHelper.setValue("EMAIL", "admin@example.com", "src/test/resources/configs/data.properties");
     }
 
     @Test(priority = 2)

@@ -1,6 +1,7 @@
 package com.anhtester.Bai26_ParallelExecutionPOM.pages;
 
 import com.anhtester.drivers.DriverManager;
+import com.anhtester.helpers.PropertiesHelper;
 import com.anhtester.keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -93,7 +94,7 @@ public class LoginPage {
     }
 
     public void loginCRM(String email, String password) {
-        WebUI.openURL("https://crm.anhtester.com/admin/authentication");
+        WebUI.openURL(PropertiesHelper.getValue("URL"));
         WebUI.waitForPageLoaded();
         WebUI.setText(inputEmail, email);
         WebUI.setText(inputPassword, password);
@@ -102,7 +103,7 @@ public class LoginPage {
     }
 
     public DashboardPage loginCRM() {
-        WebUI.openURL("https://crm.anhtester.com/admin/authentication");
+        WebUI.openURL(PropertiesHelper.getValue("URL"));
         WebUI.waitForPageLoaded();
         WebUI.clearText(inputEmail);
         WebUI.clearText(inputPassword);
