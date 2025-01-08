@@ -11,7 +11,7 @@ public class LoginTest extends BaseTest {
     LoginPage loginPage;
 
     @Test(priority = 1)
-    public void loginSuccess() {
+    public void loginSuccess(String email) {
         ExcelHelper excelHelper = new ExcelHelper();
         excelHelper.setExcelFile("src/test/resources/testdata/CRM.xlsx", "Login");
 
