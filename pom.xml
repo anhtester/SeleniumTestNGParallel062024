@@ -64,6 +64,19 @@
             <version>2.18.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>ru.yandex.qatools.ashot</groupId>
+            <artifactId>ashot</artifactId>
+            <version>1.5.4</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.github.stephenc.monte/monte-screen-recorder -->
+        <dependency>
+            <groupId>com.github.stephenc.monte</groupId>
+            <artifactId>monte-screen-recorder</artifactId>
+            <version>0.7.7.0</version>
+        </dependency>
+
     </dependencies>
 
 </project>

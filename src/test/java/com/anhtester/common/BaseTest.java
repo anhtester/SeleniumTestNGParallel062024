@@ -1,6 +1,7 @@
 package com.anhtester.common;
 
 import com.anhtester.drivers.DriverManager;
+import com.anhtester.helpers.CaptureHelper;
 import com.anhtester.helpers.PropertiesHelper;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -60,6 +61,9 @@ public class BaseTest {
 
     @AfterMethod
     public void closeDriver() {
+
+        CaptureHelper.stopRecord();
+
         if (DriverManager.getDriver() != null) {
             DriverManager.quit();
         }
