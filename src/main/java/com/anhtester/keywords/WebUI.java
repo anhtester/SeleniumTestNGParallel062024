@@ -2,7 +2,9 @@ package com.anhtester.keywords;
 
 import com.anhtester.drivers.DriverManager;
 import com.anhtester.helpers.PropertiesHelper;
+import com.anhtester.reports.ExtentTestManager;
 import com.anhtester.utils.LogUtils;
+import com.aventstack.extentreports.Status;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
@@ -101,7 +103,7 @@ public class WebUI {
 
         //Wait Javascript until it is Ready!
         if (!jsReady) {
-            //System.out.println("Javascript is NOT Ready.");
+            //LogUtils.info("Javascript is NOT Ready.");
             //Wait for Javascript to load
             try {
                 wait.until(jsLoad);
@@ -121,7 +123,7 @@ public class WebUI {
     }
 
     public static void logConsole(Object message) {
-        System.out.println(message);
+        LogUtils.info(message);
     }
 
     public static WebElement getWebElement(By by) {
@@ -136,10 +138,10 @@ public class WebUI {
         List<WebElement> listElement = getWebElements(by);
 
         if (listElement.size() > 0) {
-            System.out.println("checkElementExist: " + true + " --- " + by);
+            LogUtils.info("checkElementExist: " + true + " --- " + by);
             return true;
         } else {
-            System.out.println("checkElementExist: " + false + " --- " + by);
+            LogUtils.info("checkElementExist: " + false + " --- " + by);
             return false;
         }
     }
@@ -152,11 +154,11 @@ public class WebUI {
             try {
                 WebElement element = getWebElement(by);
                 if (element != null) {
-                    System.out.println("Tìm thấy phần tử ở lần thử thứ " + (retryCount + 1));
+                    LogUtils.info("Tìm thấy phần tử ở lần thử thứ " + (retryCount + 1));
                     return true; // Phần tử được tìm thấy
                 }
             } catch (NoSuchElementException e) {
-                System.out.println("Không tìm thấy phần tử. Thử lại lần " + (retryCount + 1));
+                LogUtils.info("Không tìm thấy phần tử. Thử lại lần " + (retryCount + 1));
                 retryCount++;
                 try {
                     Thread.sleep(waitTimeMillis); // Chờ trước khi thử lại
@@ -184,6 +186,7 @@ public class WebUI {
         DriverManager.getDriver().get(url);
         sleep(STEP_TIME);
         LogUtils.info("\uD83C\uDF10 Open URL: " + url);
+        ExtentTestManager.logMessage(Status.PASS, "Open URL: " + url);
     }
 
     public static void clickElement(By by) {
@@ -191,6 +194,7 @@ public class WebUI {
         sleep(STEP_TIME);
         getWebElement(by).click();
         LogUtils.info("Click on element " + by);
+        ExtentTestManager.logMessage(Status.PASS, "Click on element " + by);
     }
 
     public static void clickElement(By by, int timeout) {
@@ -198,6 +202,7 @@ public class WebUI {
         sleep(STEP_TIME);
         getWebElement(by).click();
         LogUtils.info("Click on element " + by);
+        ExtentTestManager.logMessage(Status.PASS, "Click on element " + by);
     }
 
     public static void clearText(By by) {
@@ -205,6 +210,7 @@ public class WebUI {
         sleep(STEP_TIME);
         getWebElement(by).clear();
         LogUtils.info("Clear text on element " + by);
+        ExtentTestManager.logMessage(Status.PASS, "Clear text on element " + by);
     }
 
     public static void setText(By by, String value) {
@@ -212,6 +218,7 @@ public class WebUI {
         sleep(STEP_TIME);
         getWebElement(by).sendKeys(value);
         LogUtils.info("Set text " + value + " on element " + by);
+        ExtentTestManager.logMessage(Status.PASS, "Set text " + value + " on element " + by);
     }
 
     public static String getElementText(By by) {
@@ -219,6 +226,8 @@ public class WebUI {
         LogUtils.info("Get text of element " + by);
         String text = getWebElement(by).getText();
         LogUtils.info("==> TEXT: " + text);
+        ExtentTestManager.logMessage(Status.PASS, "Get text of element " + by);
+        ExtentTestManager.logMessage(Status.INFO, "==> TEXT: " + text);
         return text; //Trả về một giá trị kiểu String
     }
 
@@ -227,6 +236,9 @@ public class WebUI {
         LogUtils.info("Get attribute of element " + by);
         String value = getWebElement(by).getAttribute(attributeName);
         LogUtils.info("==> Attribute value: " + value);
+        ExtentTestManager.logMessage(Status.PASS, "Get attribute of element " + by);
+        ExtentTestManager.logMessage(Status.INFO, "==> Attribute value: " + value);
+
         return value;
     }
 
@@ -235,6 +247,8 @@ public class WebUI {
         LogUtils.info("Get CSS value " + cssPropertyName + " of element " + by);
         String value = getWebElement(by).getCssValue(cssPropertyName);
         LogUtils.info("==> CSS value: " + value);
+        ExtentTestManager.logMessage(Status.PASS, "Get CSS value " + cssPropertyName + " of element " + by);
+        ExtentTestManager.logMessage(Status.INFO, "==> CSS value: " + value);
         return value;
     }
 
@@ -242,6 +256,7 @@ public class WebUI {
         waitForPageLoaded();
         getWebElement(by).sendKeys(value, key);
         LogUtils.info("Set text: " + value + " on element " + by);
+        ExtentTestManager.logMessage(Status.PASS, "Set text: " + value + " on element " + by);
     }
 
     public static void scrollToElement(By by) {
@@ -404,34 +419,39 @@ public class WebUI {
 
     public static boolean verifyEquals(Object actual, Object expected) {
         waitForPageLoaded();
-        System.out.println("Verify equals: " + actual + " \uD83D\uDFF0 " + expected);
+        LogUtils.info("Verify equals: " + actual + " \uD83D\uDFF0 " + expected);
+        ExtentTestManager.logMessage(Status.INFO,"Assert equals: " + actual + " \uD83D\uDFF0 " + expected);
         boolean check = actual.equals(expected);
         return check;
     }
 
     public static void assertEquals(Object actual, Object expected, String message) {
         waitForPageLoaded();
-        System.out.println("Assert equals: " + actual + " \uD83D\uDFF0 " + expected);
+        LogUtils.info("Assert equals: " + actual + " \uD83D\uDFF0 " + expected);
+        ExtentTestManager.logMessage(Status.INFO,"Assert equals: " + actual + " \uD83D\uDFF0 " + expected);
         Assert.assertEquals(actual, expected, message);
     }
 
     public static boolean verifyContains(String actual, String expected) {
         waitForPageLoaded();
-        System.out.println("Verify contains: " + actual + " ↔\uFE0F " + expected);
+        LogUtils.info("Verify contains: " + actual + " ↔\uFE0F " + expected);
+        ExtentTestManager.logMessage(Status.INFO,"Verify contains: " + actual + " ↔\uFE0F " + expected);
         boolean check = actual.contains(expected);
         return check;
     }
 
     public static void assertContains(String actual, String expected, String message) {
         waitForPageLoaded();
-        System.out.println("Assert contains: " + actual + " ↔\uFE0F " + expected);
+        LogUtils.info("Assert contains: " + actual + " ↔\uFE0F " + expected);
+        ExtentTestManager.logMessage(Status.INFO,"Assert NOT contains: " + actual + " ↔\uFE0F " + expected);
         boolean check = actual.contains(expected);
         Assert.assertTrue(check, message);
     }
 
     public static void assertNotContains(String actual, String expected, String message) {
         waitForPageLoaded();
-        System.out.println("Assert NOT contains: " + actual + " ↔\uFE0F " + expected);
+        LogUtils.info("Assert NOT contains: " + actual + " ↔\uFE0F " + expected);
+        ExtentTestManager.logMessage(Status.INFO,"Assert NOT contains: " + actual + " ↔\uFE0F " + expected);
         boolean check = actual.contains(expected);
         Assert.assertFalse(check, message);
     }
