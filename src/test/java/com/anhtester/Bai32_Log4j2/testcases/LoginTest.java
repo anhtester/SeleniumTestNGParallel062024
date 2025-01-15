@@ -1,11 +1,9 @@
-package com.anhtester.Bai31_TestListener.testcases;
+package com.anhtester.Bai32_Log4j2.testcases;
 
-import com.anhtester.Bai31_TestListener.pages.LoginPage;
+import com.anhtester.Bai32_Log4j2.pages.LoginPage;
 import com.anhtester.common.BaseTest;
 import com.anhtester.dataproviders.DataProviderFactory;
-import com.anhtester.helpers.CaptureHelper;
-import com.anhtester.listeners.TestListener;
-import org.testng.annotations.Listeners;
+import com.anhtester.utils.LogUtils;
 import org.testng.annotations.Test;
 
 import java.util.Hashtable;
