@@ -1,0 +1,13 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite Customer Test" verbose="1">
+
+    <test name="Customer Test with Chrome" parallel="none">
+        <parameter name="browser" value="Chrome"/>
+        <classes>
+            <class name="com.anhtester.Bai32_Log4j2.testcases.CustomerTest">
+            </class>
+        </classes>
+    </test>
+
+</suite>

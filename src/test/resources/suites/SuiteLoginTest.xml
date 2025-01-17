@@ -2,13 +2,10 @@
 
 <suite name="Suite Login Test" verbose="1">
 
-    <test name="Login Test with Chrome">
+    <test name="Login Test with Edge" parallel="methods" thread-count="7">
         <parameter name="browser" value="edge"/>
         <classes>
-            <class name="com.anhtester.Bai26_ParallelExecutionPOM.testcases.LoginTest">
-                <methods>
-                    <include name="loginSuccess"/>
-                </methods>
+            <class name="com.anhtester.Bai34_AllureReport.testcases.LoginTest">
             </class>
         </classes>
     </test>

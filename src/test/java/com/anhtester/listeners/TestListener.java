@@ -2,6 +2,7 @@ package com.anhtester.listeners;
 
 import com.anhtester.helpers.CaptureHelper;
 import com.anhtester.helpers.PropertiesHelper;
+import com.anhtester.reports.AllureManager;
 import com.anhtester.reports.ExtentReportManager;
 import com.anhtester.reports.ExtentTestManager;
 import com.anhtester.utils.LogUtils;
@@ -83,6 +84,10 @@ public class TestListener implements ITestListener {
         ExtentTestManager.logMessage(Status.FAIL, result.getThrowable().toString());
         ExtentTestManager.addScreenshot(result.getName());
         ExtentTestManager.logMessage(Status.FAIL, "❌ Test case " + result.getName() + " is failed.");
+
+        //Allure Report
+        //AllureManager.saveTextLog("❌ Test case " + result.getName() + " is failed.");
+        AllureManager.saveScreenshotPNG();
 
         test_failed_total++;
         CaptureHelper.captureScreenshot(result.getName());

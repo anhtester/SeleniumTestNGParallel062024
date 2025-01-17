@@ -4,6 +4,7 @@ import com.anhtester.drivers.DriverManager;
 import com.anhtester.helpers.CaptureHelper;
 import com.anhtester.helpers.PropertiesHelper;
 import com.anhtester.listeners.TestListener;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -23,6 +24,7 @@ public class BaseTest {
 
     @BeforeMethod
     @Parameters({"browser"})
+    @Step("Run with browser {0}")
     public void createDriver(@Optional("chrome") String browser) {
         WebDriver driver;
 
@@ -62,6 +64,7 @@ public class BaseTest {
     }
 
     @AfterMethod
+    @Step("Closed browser")
     public void closeDriver() {
 
         CaptureHelper.stopRecord();
