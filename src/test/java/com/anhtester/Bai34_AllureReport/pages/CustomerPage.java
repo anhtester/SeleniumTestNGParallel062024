@@ -4,7 +4,10 @@ import com.anhtester.drivers.DriverManager;
 import com.anhtester.keywords.WebUI;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.testng.Assert;
+
+import static com.anhtester.keywords.WebUI.*;
 
 public class CustomerPage extends BasePage {
 
@@ -93,12 +96,24 @@ public class CustomerPage extends BasePage {
 
     public void searchAndCheckCustomerInTable(String customerName) {
         clickMenuCustomer();
-
         WebUI.setText(inputSearchCustomer, customerName);
         WebUI.sleep(2);
         String customerNameInTable = WebUI.getElementText(itemCustomerFirst);
         System.out.println(customerNameInTable);
         WebUI.assertEquals(customerNameInTable, customerName, "The customer name in table not match.");
+    }
+
+    public void searchDataCustomer(String data){
+        waitForPageLoaded();
+        setText(inputSearchCustomer, data);
+    }
+
+    public void searchAndCheckDataInTable(int column, String data, String columnName) {
+        waitForPageLoaded();
+        setTextAndKey(inputSearchCustomer, data, Keys.ENTER);
+        sleep(2);
+        waitForPageLoaded();
+        WebUI.checkDataInTableByColumn_Contains(column, data, columnName);
     }
 
     public void clickFirstCustomer() {

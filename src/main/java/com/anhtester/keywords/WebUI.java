@@ -2,6 +2,7 @@ package com.anhtester.keywords;
 
 import com.anhtester.drivers.DriverManager;
 import com.anhtester.helpers.PropertiesHelper;
+import com.anhtester.helpers.SystemHelper;
 import com.anhtester.reports.AllureManager;
 import com.anhtester.reports.ExtentTestManager;
 import com.anhtester.utils.LogUtils;
@@ -25,6 +26,56 @@ public class WebUI {
     private static int TIMEOUT = Integer.parseInt(PropertiesHelper.getValue("EXPLICIT_WAIT"));
     private static double STEP_TIME = 0;
     private static int PAGE_LOAD_TIMEOUT = 30;
+
+    @Step("Check data: {1} in Table by column {2}")
+    public static void checkDataInTableByColumn_Contains(int column, String value, String columnName) {
+
+        LogUtils.info("\uD83D\uDFE2 Check data " + value + " in Table by column " + columnName);
+        ExtentTestManager.logMessage(Status.INFO, "\uD83D\uDFE2 Check data " + value + " in Table by column " + columnName);
+
+        //Xác định số dòng của table sau khi search
+        List<WebElement> row = DriverManager.getDriver().findElements(By.xpath("//table//tbody/tr"));
+        int rowTotal = row.size(); //Lấy ra số dòng
+        LogUtils.info("Số dòng tìm thấy: " + rowTotal);
+
+        //Duyệt từng dòng
+        for (int i = 1; i <= rowTotal; i++) {
+            WebElement elementCheck = DriverManager.getDriver().findElement(By.xpath("//table//tbody/tr[" + i + "]/td[" + column + "]"));
+
+            JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+            js.executeScript("arguments[0].scrollIntoView(true);", elementCheck);
+
+            LogUtils.info(value + " - ");
+            LogUtils.info(elementCheck.getText());
+            Assert.assertTrue(SystemHelper.removeSpecialCharacters(elementCheck.getText()).toUpperCase().contains(SystemHelper.removeSpecialCharacters(value).toUpperCase()), "Dòng số " + i + " không chứa giá trị tìm kiếm.");
+        }
+
+    }
+
+    @Step("Check data: {1} in Table by column {2}")
+    public static void checkDataInTableByColumn_Equals(int column, String value, String columnName) {
+
+        LogUtils.info("\uD83D\uDFE2 Check data " + value + " in Table by column " + columnName);
+        ExtentTestManager.logMessage(Status.INFO, "\uD83D\uDFE2 Check data " + value + " in Table by column " + columnName);
+
+        //Xác định số dòng của table sau khi search
+        List<WebElement> row = DriverManager.getDriver().findElements(By.xpath("//table//tbody/tr"));
+        int rowTotal = row.size(); //Lấy ra số dòng
+        LogUtils.info("Số dòng tìm thấy: " + rowTotal);
+
+        //Duyệt từng dòng
+        for (int i = 1; i <= rowTotal; i++) {
+            WebElement elementCheck = DriverManager.getDriver().findElement(By.xpath("//table//tbody/tr[" + i + "]/td[" + column + "]"));
+
+            JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+            js.executeScript("arguments[0].scrollIntoView(true);", elementCheck);
+
+            System.out.print(value + " - ");
+            LogUtils.info(elementCheck.getText());
+            Assert.assertTrue(elementCheck.getText().toUpperCase().equals(value.toUpperCase()), "Dòng số " + i + " không chứa giá trị tìm kiếm.");
+        }
+
+    }
 
     public static void uploadFileWithRobotClass(By elementFileForm, String filePath) {
         //Click để mở form upload
@@ -466,7 +517,7 @@ public class WebUI {
     public static boolean verifyEquals(Object actual, Object expected) {
         waitForPageLoaded();
         LogUtils.info("Verify equals: " + actual + " \uD83D\uDFF0 " + expected);
-        ExtentTestManager.logMessage(Status.INFO,"Assert equals: " + actual + " \uD83D\uDFF0 " + expected);
+        ExtentTestManager.logMessage(Status.INFO, "Assert equals: " + actual + " \uD83D\uDFF0 " + expected);
         boolean check = actual.equals(expected);
         return check;
     }
@@ -474,14 +525,14 @@ public class WebUI {
     public static void assertEquals(Object actual, Object expected, String message) {
         waitForPageLoaded();
         LogUtils.info("Assert equals: " + actual + " \uD83D\uDFF0 " + expected);
-        ExtentTestManager.logMessage(Status.INFO,"Assert equals: " + actual + " \uD83D\uDFF0 " + expected);
+        ExtentTestManager.logMessage(Status.INFO, "Assert equals: " + actual + " \uD83D\uDFF0 " + expected);
         Assert.assertEquals(actual, expected, message);
     }
 
     public static boolean verifyContains(String actual, String expected) {
         waitForPageLoaded();
         LogUtils.info("Verify contains: " + actual + " ↔\uFE0F " + expected);
-        ExtentTestManager.logMessage(Status.INFO,"Verify contains: " + actual + " ↔\uFE0F " + expected);
+        ExtentTestManager.logMessage(Status.INFO, "Verify contains: " + actual + " ↔\uFE0F " + expected);
         boolean check = actual.contains(expected);
         return check;
     }
@@ -489,7 +540,7 @@ public class WebUI {
     public static void assertContains(String actual, String expected, String message) {
         waitForPageLoaded();
         LogUtils.info("Assert contains: " + actual + " ↔\uFE0F " + expected);
-        ExtentTestManager.logMessage(Status.INFO,"Assert NOT contains: " + actual + " ↔\uFE0F " + expected);
+        ExtentTestManager.logMessage(Status.INFO, "Assert NOT contains: " + actual + " ↔\uFE0F " + expected);
         boolean check = actual.contains(expected);
         Assert.assertTrue(check, message);
     }
@@ -497,7 +548,7 @@ public class WebUI {
     public static void assertNotContains(String actual, String expected, String message) {
         waitForPageLoaded();
         LogUtils.info("Assert NOT contains: " + actual + " ↔\uFE0F " + expected);
-        ExtentTestManager.logMessage(Status.INFO,"Assert NOT contains: " + actual + " ↔\uFE0F " + expected);
+        ExtentTestManager.logMessage(Status.INFO, "Assert NOT contains: " + actual + " ↔\uFE0F " + expected);
         boolean check = actual.contains(expected);
         Assert.assertFalse(check, message);
     }
