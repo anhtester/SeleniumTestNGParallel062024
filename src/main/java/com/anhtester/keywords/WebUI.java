@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.KeyEvent;
 import java.time.Duration;
 import java.util.List;
@@ -24,6 +25,40 @@ public class WebUI {
     private static int TIMEOUT = Integer.parseInt(PropertiesHelper.getValue("EXPLICIT_WAIT"));
     private static double STEP_TIME = 0;
     private static int PAGE_LOAD_TIMEOUT = 30;
+
+    public static void uploadFileWithRobotClass(By elementFileForm, String filePath) {
+        //Click để mở form upload
+        WebUI.clickElement(elementFileForm);
+        WebUI.sleep(2);
+
+        // Khởi tạo Robot class
+        Robot rb = null;
+        try {
+            rb = new Robot();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+
+        // Copy File path vào Clipboard
+        StringSelection str = new StringSelection(filePath);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(str, null);
+
+        // Nhấn Control+V để dán
+        rb.keyPress(KeyEvent.VK_CONTROL);
+        rb.keyPress(KeyEvent.VK_V);
+
+        // Xác nhận Control V trên
+        rb.keyRelease(KeyEvent.VK_CONTROL);
+        rb.keyRelease(KeyEvent.VK_V);
+
+        WebUI.sleep(1);
+
+        // Nhấn Enter
+        rb.keyPress(KeyEvent.VK_ENTER);
+        rb.keyRelease(KeyEvent.VK_ENTER);
+
+        WebUI.sleep(2);
+    }
 
     //Wait for Element
 
