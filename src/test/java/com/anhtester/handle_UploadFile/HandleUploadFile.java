@@ -13,7 +13,6 @@ public class HandleUploadFile extends BaseTest {
     @Test
     public void testUploadFileWithSendKeys() {
         WebUI.openURL("https://the-internet.herokuapp.com/upload");
-
         WebUI.waitForPageLoaded();
         WebUI.sleep(2);
 
@@ -35,7 +34,7 @@ public class HandleUploadFile extends BaseTest {
     @Test
     public void testUploadFileWithRobotClass() {
         WebUI.openURL("https://files.fm/");
-        //WebUI.waitForPageLoaded();
+        WebUI.waitForPageLoaded();
         WebUI.sleep(3);
 
         By textOnPage = By.xpath("//div[@id='file_select_dragndrop_text']");
